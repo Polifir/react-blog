@@ -1,0 +1,58 @@
+@import '../../variables.scss';
+
+.container {
+  max-width: 384px;
+  background-color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 48px 32px;
+  border-radius: 5px;
+}
+
+.labelInput {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  gap: 2px;
+}
+
+.inputText {
+  font-size: 16px;
+  color: $main-text-color;
+  border: 1px solid $input-text-color;
+  border-radius: 5px;
+  padding: 8px 12px;
+  max-width: 320px;
+}
+
+.inputError {
+  border-color: red;
+}
+
+.inputDescr {
+  font-size: 14px;
+}
+
+.CheckboxContainer {
+  border-top: 1px solid $input-text-color;
+  padding-top: 8px;
+  text-align: start;
+  align-items: start;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.submitBtn {
+  color: $primary-color;
+  border: none;
+  margin-top: 20px;
+  border-radius: 5px;
+  padding: 8px 16px;
+  background-color: $info-color;
+}
+
+.validateError {
+  color: $error-color;
+}

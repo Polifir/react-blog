@@ -1,0 +1,124 @@
+@import '../../variables.scss';
+
+.container {
+  padding: 15px;
+  background-color: $primary-color;
+  width: 940px;
+  border-radius: 0 $deg $deg 0;
+  box-shadow: $box-shadow;
+}
+
+.top {
+  display: flex;
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  flex-shrink: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  color: $info-color;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: none;
+  max-width: 640px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.heart_container {
+  display: flex;
+  margin-left: 15px;
+  gap: 2px;
+}
+
+.btn_like {
+  border: none;
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+}
+.heart_count {
+  font-size: 12px;
+  color: $main-text-color;
+}
+
+.tagList {
+  margin-top: 4px;
+  display: flex;
+  gap: 5px;
+  max-width: 780px;
+  flex-wrap: wrap;
+}
+.tag {
+  border-radius: 2px;
+  font-size: 12px;
+  border: 1px solid $title-color;
+
+  color: $title-color;
+  padding: 3px 6px;
+}
+.descr {
+  display: inline;
+  left: 0;
+  margin-top: 4px;
+  width: 680px;
+  font-size: 12px;
+  color: $main-text-color;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.bio {
+  display: flex;
+  justify-content: end;
+  gap: 12px;
+  flex-grow: 2;
+}
+
+.bio_left {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.img_conatiner {
+  max-width: 46px;
+  max-height: 46px;
+  border: 2px solid $info-color;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.img_logo {
+  width: 46px;
+  height: 46px;
+}
+
+.nickname {
+  font-size: 18px;
+  color: $title-color;
+}
+
+.date {
+  font-size: 12px;
+  color: $secondary-text-color;
+}
+
+.body {
+  margin-top: 25px;
+  text-align: left;
+}

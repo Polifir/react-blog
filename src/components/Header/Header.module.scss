@@ -1,0 +1,64 @@
+@import '../../variables.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 22px;
+  background-color: $primary-color;
+}
+
+.logo {
+  font-size: 18px;
+}
+.menu {
+  display: flex;
+  gap: 20px;
+}
+.btn {
+  font-size: 18px;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+.btn_green {
+  color: $active-button-color;
+  border: 1px solid $active-button-color;
+  border-radius: $deg;
+  padding: 5px 18px;
+}
+
+.bio {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+}
+.bio_text {
+  font-size: 18px;
+  color: $title-color;
+}
+.bio_img_container {
+  max-width: 46px;
+  max-height: 46px;
+  border: 2px solid $info-color;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.img {
+  max-width: 46px;
+  max-height: 46px;
+}
+
+.btn_black {
+  color: $main-text-color;
+  border: 1px solid $main-text-color;
+  border-radius: $deg;
+  padding: 5px 18px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
