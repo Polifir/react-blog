@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Form from '../../components/Form/Form';
 import { usePostAticleMutation } from '../../redux/BlogAPI';
-import getCookie from '../../coockie';
-
-const userToken = getCookie('Token');
+import { useSelector } from 'react-redux';
 const formData = [
   { type: 'title', name: 'Create new Article' },
   {
@@ -50,12 +48,13 @@ const formData = [
 export default function CreateArticlePage() {
   const [addArticle] = usePostAticleMutation();
   const navigate = useNavigate();
-  const onSubmit = async (data) => {
+  const userToken = useSelector((state) => state.user.jwt);
+  const onSubmit = (data) => {
     const res = {
       article: data,
       userToken,
     };
-    await addArticle(res);
+    addArticle(res);
     navigate('/');
   };
   return <Form data={formData} onSubmit={onSubmit} type={'article'} />;
