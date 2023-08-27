@@ -10,6 +10,7 @@
 
 .top {
   display: flex;
+  justify-content: space-between;
 }
 
 .article {
@@ -121,4 +122,26 @@
 .body {
   margin-top: 25px;
   text-align: left;
+}
+.btn {
+  background-color: inherit;
+  padding: 5px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.5;
+}
+
+.btnDelete {
+  color: $error-color;
+  border: 1px solid $error-color;
+}
+.btnEdit {
+  color: $active-button-color;
+  border: 1px solid $active-button-color;
+  margin-left: 10px;
 }

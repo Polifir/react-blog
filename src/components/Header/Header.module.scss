@@ -9,23 +9,31 @@
 }
 
 .logo {
-  font-size: 18px;
+  display: flex;
+  text-decoration: none;
+  color: $main-text-color;
+  font-size: 20px;
 }
 .menu {
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 .btn {
   font-size: 18px;
   border: none;
   background-color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  color: $main-text-color;
 }
 .btn_green {
   color: $active-button-color;
   border: 1px solid $active-button-color;
   border-radius: $deg;
-  padding: 5px 18px;
+  padding: 5px;
 }
 
 .bio {
@@ -39,26 +47,31 @@
   color: $title-color;
 }
 .bio_img_container {
-  max-width: 46px;
-  max-height: 46px;
+  width: 46px;
+  height: 46px;
   border: 2px solid $info-color;
   border-radius: 50%;
   overflow: hidden;
 }
 .img {
-  max-width: 46px;
-  max-height: 46px;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
 }
 
 .btn_black {
   color: $main-text-color;
   border: 1px solid $main-text-color;
   border-radius: $deg;
-  padding: 5px 18px;
+  padding: 15px 18px;
+  text-decoration: none;
 }
 
 .link {
   display: flex;
   align-items: center;
   text-decoration: none;
+  margin: 0;
+  padding: 0;
 }

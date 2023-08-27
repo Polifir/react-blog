@@ -1,14 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom';
 import styles from './Form.module.scss';
 import { useForm } from 'react-hook-form';
-import React from 'react';
 import classNames from 'classnames';
+import React, { useEffect, useState } from 'react';
 
-export default function Form({ data, onSubmit }) {
+export default function Form({ data, onSubmit, type }) {
   const {
     inputText,
-    container,
+    userContainer,
     title,
     labelInput,
     inputDescr,
@@ -16,25 +17,45 @@ export default function Form({ data, onSubmit }) {
     submitBtn,
     validateError,
     inputError,
+    articleContainer,
+    inputTextArea,
+    tags,
+    tagsContainer,
+    buttonDelete,
+    buttonAdd,
   } = styles;
+  const [tagsInput, setAddtagsInput] = useState([]);
+
+  useEffect(() => {
+    if (type === 'article') {
+      setAddtagsInput([...data[4].defaultValue]);
+    }
+  }, []);
+
+  const addTags = () => {
+    setAddtagsInput([...tagsInput, []]);
+  };
+  const deleteTags = (index) => {
+    setAddtagsInput(tagsInput.filter((e, i) => (i === index ? false : true)));
+  };
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
 
   const matchPassword = () => {
     if (watch('repetPassword') !== watch('password')) {
-      console.log('Пароли не совпадают!');
-      console.log(errors);
       return false;
     }
     return true;
   };
-  console.log(isSubmitting);
   return (
-    <form className={container} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={type === 'article' ? articleContainer : userContainer}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       {data.map((e, i) => {
         switch (e.type) {
           case 'title':
@@ -48,6 +69,7 @@ export default function Form({ data, onSubmit }) {
               <label key={i} className={labelInput}>
                 <span className={inputDescr}>{e.name}</span>
                 <input
+                  defaultValue={e.defaultValue}
                   className={classNames(inputText, [
                     errors[e.label] ? inputError : false,
                   ])}
@@ -63,8 +85,8 @@ export default function Form({ data, onSubmit }) {
             );
           case 'checkbox':
             return (
-              <>
-                <label key={i} className={CheckboxContainer}>
+              <React.Fragment key={i}>
+                <label className={CheckboxContainer}>
                   <input
                     className={classNames(inputText, [
                       errors[e.label] ? inputError : false,
@@ -78,7 +100,7 @@ export default function Form({ data, onSubmit }) {
                 {errors[e.label] && (
                   <p className={validateError}>{errors[e.label].message}</p>
                 )}
-              </>
+              </React.Fragment>
             );
           case 'button':
             return (
@@ -91,8 +113,8 @@ export default function Form({ data, onSubmit }) {
             );
           case 'repetPassword':
             return (
-              <React.Fragment key={i}>
-                <label className={labelInput}>
+              <p key={i}>
+                <label key={`${i} 'password'`} className={labelInput}>
                   <span className={inputDescr}>{e.name}</span>
                   <input
                     className={classNames(inputText, [
@@ -110,6 +132,7 @@ export default function Form({ data, onSubmit }) {
                       },
                     })}
                     placeholder={e.name}
+                    type='password'
                   />
                   {errors?.password && (
                     <span className={validateError}>
@@ -117,9 +140,10 @@ export default function Form({ data, onSubmit }) {
                     </span>
                   )}
                 </label>
-                <label key={i} className={labelInput}>
+                <label key={i + 'repeatPassword'} className={labelInput}>
                   <span className={inputDescr}>Repet Password</span>
                   <input
+                    type='password'
                     className={classNames(inputText, [
                       errors?.password ? inputError : false,
                     ])}
@@ -139,7 +163,7 @@ export default function Form({ data, onSubmit }) {
                     <span className={validateError}>Пароли не совпадают</span>
                   )}
                 </label>
-              </React.Fragment>
+              </p>
             );
           case 'descr':
             return (
@@ -147,6 +171,73 @@ export default function Form({ data, onSubmit }) {
                 {e.name + ' '}
                 <Link to={`/${e.label}`}>{e.link}</Link>
               </span>
+            );
+          case 'text':
+            return (
+              <label className={labelInput} key={i}>
+                <span className={inputDescr}>{e.name}</span>
+                <textarea
+                  type={'text'}
+                  defaultValue={e.defaultValue}
+                  className={classNames(inputTextArea, [
+                    errors[e.label] ? inputError : false,
+                  ])}
+                  {...register(e.label, e.validate)}
+                  placeholder={e.name}
+                />
+                {errors[e.label] && (
+                  <span className={validateError}>
+                    {errors[e.label].message}
+                  </span>
+                )}
+              </label>
+            );
+          case 'tags':
+            return (
+              <div className={tags} key={i}>
+                <span className={inputDescr}>{e.name}</span>
+                {tagsInput.length ? (
+                  tagsInput.map((tag, i) => (
+                    <React.Fragment key={i}>
+                      <div className={tagsContainer}>
+                        <input
+                          defaultValue={tag}
+                          className={classNames(inputText, [
+                            errors[e.label] ? inputError : false,
+                          ])}
+                          {...register(`${e.label}.${i}`, e.validate)}
+                          placeholder={e.name}
+                        />
+                        <button
+                          className={buttonDelete}
+                          type='button'
+                          onClick={() => deleteTags(i)}
+                        >
+                          Delete
+                        </button>
+                        {i === tagsInput.length - 1 && (
+                          <button
+                            className={buttonAdd}
+                            onClick={addTags}
+                            type='button'
+                          >
+                            Add
+                          </button>
+                        )}
+                      </div>
+                      {errors[e.label] && (
+                        <span className={validateError}>
+                          {errors[e.label].message}
+                        </span>
+                      )}
+                    </React.Fragment>
+                  ))
+                ) : (
+                  <button className={buttonAdd} onClick={addTags} type='button'>
+                    Add
+                  </button>
+                )}
+              </div>
             );
         }
       })}

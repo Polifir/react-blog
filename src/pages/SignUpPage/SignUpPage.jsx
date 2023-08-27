@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
 import { usePostUsersMutation } from '../../redux/BlogAPI';
 
@@ -49,8 +50,11 @@ const formData = [
 
 export default function SignUpPage() {
   const [addUser] = usePostUsersMutation();
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
     const { username, email, password } = data;
+
     const user = {
       user: {
         username,
@@ -58,7 +62,15 @@ export default function SignUpPage() {
         password,
       },
     };
-    await addUser(user);
+    const res = await addUser(user);
+    if (res.error?.status === 422) {
+      return alert(
+        `Данный ${
+          res.error.data.errors?.username ? 'username' : 'email'
+        } уже  ипользуется`
+      );
+    }
+    navigate('/sign-in');
   };
 
   return <Form data={formData} onSubmit={onSubmit} />;

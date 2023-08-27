@@ -16,7 +16,6 @@ export default function Header() {
     btn_green,
     btn_black,
     bio,
-    link,
     bio_text,
     bio_img_container,
     img,
@@ -25,19 +24,17 @@ export default function Header() {
   const dispatch = useDispatch();
   const userToken = getCookie('Token');
   const { user } = userData;
-
   return (
     <header className={header}>
-      <Link to='/'>
-        <button className={classNames(btn, logo)}>Realworld Blog</button>
+      <Link to='/' className={classNames(logo)}>
+        Realworld Blog
       </Link>
+
       <div className={menu}>
         {user?.username ? (
           <>
-            <Link className={link} to='/create-article'>
-              <button className={classNames(btn, btn_green)}>
-                Create article
-              </button>
+            <Link className={classNames(btn, btn_green)} to='/create-article'>
+              Create article
             </Link>
 
             <Link className={bio} to='/edit-profile'>
@@ -50,20 +47,22 @@ export default function Header() {
                 />
               </div>
             </Link>
-            <button
+
+            <Link
+              to='/'
               className={classNames(btn, btn_black)}
               onClick={() => dispatch(logOut(userToken))}
             >
               Log Out
-            </button>
+            </Link>
           </>
         ) : (
           <>
-            <Link className={link} to='/sign-in'>
-              <button className={btn}>Sign In</button>
+            <Link className={classNames(btn)} to='/sign-in'>
+              Sign In
             </Link>
-            <Link to='/sign-up'>
-              <button className={classNames(btn, btn_green)}>Sign Up</button>
+            <Link to='/sign-up' className={classNames(btn, btn_green)}>
+              Sign Up
             </Link>
           </>
         )}

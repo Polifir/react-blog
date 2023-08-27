@@ -11,11 +11,13 @@ import { store } from '../redux';
 import { useEffect } from 'react';
 import { auth } from '../redux/userSlice';
 import getCookie from '../coockie';
+import RequierAuth from '../hoc';
+import CreateArticlePage from '../pages/CreateArticlePage';
+import ArticleEditPage from '../pages/ArticleEditPage/ArticleEditPage';
 
 function App() {
   const { section } = styles;
   const userToken = getCookie('Token');
-  console.log(userToken);
   useEffect(() => {
     store.dispatch(auth(userToken));
   }, []);
@@ -25,9 +27,32 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<MainPage />} />
           <Route path='/article/:slug' element={<ArticlePage />} />
+          <Route
+            path='/article/:slug/edit'
+            element={
+              <RequierAuth>
+                <ArticleEditPage />
+              </RequierAuth>
+            }
+          />
           <Route path='/sign-up' element={<SignUpPage />} />
           <Route path='/sign-in' element={<SignInPage />} />
-          <Route path='/edit-profile' element={<EditProfilePage />} />
+          <Route
+            path='/edit-profile'
+            element={
+              <RequierAuth>
+                <EditProfilePage />
+              </RequierAuth>
+            }
+          />
+          <Route
+            path='/create-article'
+            element={
+              <RequierAuth>
+                <CreateArticlePage />
+              </RequierAuth>
+            }
+          />
         </Route>
       </Routes>
     </section>

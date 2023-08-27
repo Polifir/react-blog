@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   jwt: '',
-  auth: false,
   user: {},
 };
 
@@ -12,7 +11,6 @@ export const userSlice = createSlice({
   reducers: {
     logOut: (state, actions) => {
       state.jwt = '';
-      state.auth = false;
       state.user = {};
       localStorage.removeItem(actions.payload);
       document.cookie = `Token=`;
@@ -20,27 +18,42 @@ export const userSlice = createSlice({
     signIn: (state, actions) => {
       document.cookie = `Token=${actions.payload.jwt}`;
       state.jwt = actions.payload.jwt;
-      state.auth = true;
       state.user = {
         username: actions.payload.username,
         email: actions.payload.email,
+        image: actions.payload.image,
       };
+
       localStorage.setItem(
         `${actions.payload.jwt}`,
         JSON.stringify({
           username: actions.payload.username,
           email: actions.payload.email,
+          image: actions.payload.image,
         })
       );
     },
     auth: (state, actions) => {
-      console.log(actions.payload);
       const user = JSON.parse(localStorage.getItem(actions.payload));
-      console.log(user);
       state.user = user;
+      state.jwt = actions.payload;
     },
     updateUser: (state, actions) => {
-      console.log(actions.payload);
+      document.cookie = `Token=${actions.payload.userToken}`;
+      state.jwt = actions.payload.userToken;
+      state.user = {
+        username: actions.payload.user.username,
+        email: actions.payload.user.email,
+        image: actions.payload.user.image,
+      };
+      localStorage.setItem(
+        `${actions.payload.userToken}`,
+        JSON.stringify({
+          username: actions.payload.user.username,
+          email: actions.payload.user.email,
+          image: actions.payload.image,
+        })
+      );
     },
   },
 });

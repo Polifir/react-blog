@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import Form from '../../components/Form';
 import getCookie from '../../coockie';
 import { usePutUsersEditMutation } from '../../redux';
@@ -5,9 +6,9 @@ import { updateUser } from '../../redux/userSlice';
 
 export default function EditProfilePage() {
   const [editProfile] = usePutUsersEditMutation();
+  const dispatch = useDispatch();
   const userToken = getCookie('Token');
   const user = JSON.parse(localStorage.getItem(userToken));
-  console.log('user', user);
 
   const formData = [
     { type: 'title', name: 'Edit Profile' },
@@ -38,14 +39,14 @@ export default function EditProfilePage() {
     {
       type: 'input',
       name: 'New password',
-      label: 'Password',
+      label: 'password',
       validate: {
         required: 'Обязательное поле',
         minLength: { value: 6, message: 'Минимальная длина 6 символа' },
         maxLength: { value: 40, message: 'Максимальная длина 40 символов' },
       },
     },
-    { type: 'input', name: 'Avatar image (url)', label: 'RepetPassword' },
+    { type: 'input', name: 'Avatar image (url)', label: 'image' },
     {
       type: 'button',
       name: 'Save',
@@ -53,7 +54,7 @@ export default function EditProfilePage() {
     },
   ];
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const dataRes = {
       user: {
         username: data.username,
@@ -63,9 +64,15 @@ export default function EditProfilePage() {
       },
       userToken,
     };
-    console.log(dataRes);
-    updateUser(dataRes);
-    editProfile({ data, userToken });
+    const res = await editProfile(dataRes);
+    if (res.error?.status === 422) {
+      return alert(
+        `Данный ${
+          res.error.data.errors?.username ? 'username' : 'email'
+        } уже  ипользуется`
+      );
+    }
+    dispatch(updateUser(dataRes));
   };
   return <Form data={formData} onSubmit={onSubmit} />;
 }

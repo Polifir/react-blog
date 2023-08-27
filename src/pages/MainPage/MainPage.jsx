@@ -1,17 +1,23 @@
 import { useState } from 'react';
 import ArticleList from '../../components/ArticleList/ArticleList';
 import { useGetArticlesListQuery } from '../../redux';
-import { ConfigProvider, Pagination } from 'antd';
+import { ConfigProvider, Pagination, Spin } from 'antd';
+import { useSelector } from 'react-redux';
 
 export default function MainPage() {
   const [artcileSkip, setArtcileSkip] = useState(0);
+  const userToken = useSelector((state) => state.user.jwt);
   const clickPagination = (count) => {
     setArtcileSkip(count !== 1 ? 20 * count : 0);
   };
-
-  const { data = { articles: [], articlesCount: 5 }, isLoading } =
-    useGetArticlesListQuery(artcileSkip);
-  return (
+  const resData = {
+    userToken,
+    artcileSkip,
+  };
+  const { data, isLoading } = useGetArticlesListQuery(resData);
+  return isLoading ? (
+    <Spin />
+  ) : (
     <div>
       <ArticleList articles={data.articles} isLoading={isLoading} />
       <ConfigProvider
@@ -26,7 +32,7 @@ export default function MainPage() {
           showSizeChanger={false}
           pageSize={20}
           defaultCurrent={1}
-          total={data.articlesCount}
+          total={data.articlesCount - 20}
           onChange={clickPagination}
         />
       </ConfigProvider>

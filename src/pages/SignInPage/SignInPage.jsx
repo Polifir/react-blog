@@ -46,6 +46,7 @@ export default function SignInPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onSubmit = async (data) => {
+    console.log('DATA SIGN IN', data);
     const { email, password } = data;
     const user = {
       user: {
@@ -53,7 +54,7 @@ export default function SignInPage() {
         password,
       },
     };
-    const res = await addUser(user).then((res) => res);
+    const res = await addUser(user);
     if (res.error?.status === 422) {
       return alert('Не верный логин или пароль');
     }
