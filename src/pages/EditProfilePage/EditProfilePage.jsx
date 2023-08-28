@@ -21,6 +21,10 @@ export default function EditProfilePage() {
         required: 'Обязательное поле',
         minLength: { value: 3, message: 'Минимальная длина 3 символа' },
         maxLength: { value: 20, message: 'Максимальная длина 20 символов' },
+        pattern: {
+          value: /[a-zA-Z0-9]+/i,
+          message: 'Только латинские буквы',
+        },
       },
     },
     {
