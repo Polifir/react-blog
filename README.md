@@ -1,1 +1,1 @@
-https://react-blog-jp2z.vercel.app/sign-up
+https://react-blog-rigy8w6dx-polifir.vercel.app/
