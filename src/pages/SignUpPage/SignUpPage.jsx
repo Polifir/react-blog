@@ -13,7 +13,7 @@ const formData = [
       minLength: { value: 3, message: 'Минимальная длина 3 символа' },
       maxLength: { value: 20, message: 'Максимальная длина 20 символов' },
       pattern: {
-        value: /[a-zA-Z0-9]+/i,
+        value: /[a-zA-Z0-9]+/g,
         message: 'Только латинские буквы',
       },
     },
@@ -69,9 +69,9 @@ export default function SignUpPage() {
     const res = await addUser(user);
     if (res.error?.status === 422) {
       return alert(
-        `Данный ${
-          res.error.data.errors?.username ? 'username' : 'email'
-        } уже  ипользуется`
+        res.error.data.errors?.username
+          ? `username ${res.error.data.errors.username} `
+          : `email ${res.error.data.errors.email} `
       );
     }
     navigate('/sign-in');
