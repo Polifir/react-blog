@@ -25,7 +25,7 @@ function App() {
     <section className={section}>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route path='/' element={<MainPage />} />
+          <Route index element={<MainPage />} />
           <Route path='/:skipArticle' element={<MainPage />} />
           <Route path='/article/:slug' element={<ArticlePage />} />
           <Route
