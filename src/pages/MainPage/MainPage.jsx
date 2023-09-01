@@ -8,17 +8,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 export default function MainPage() {
   const navigate = useNavigate();
   const params = useParams();
-  const patchSkip = +params.skipArticle;
+  const patchSkip = +params.skipArticle ? +params.skipArticle : 0;
   const [artcileSkip, setArtcileSkip] = useState(patchSkip);
   const userToken = useSelector((state) => state.user.jwt);
   const clickPagination = (count) => {
     const calcSkipArticle = count - 1 !== 0 ? 20 * (count - 1) : 0;
     setArtcileSkip(() => calcSkipArticle);
-    navigate(`/${artcileSkip}`);
+    navigate(`/${calcSkipArticle}`);
   };
   const resData = {
     userToken,
-    patchSkip,
+    artcileSkip,
   };
   const { data, isLoading } = useGetArticlesListQuery(resData);
   return isLoading ? (
