@@ -1,1 +1,1 @@
-https://react-blog-rigy8w6dx-polifir.vercel.app/
+react-blog-fmyp-ehi807xkc-polifir.vercel.app
