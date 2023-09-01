@@ -13,7 +13,7 @@ export default function MainPage() {
   const userToken = useSelector((state) => state.user.jwt);
   const clickPagination = (count) => {
     const calcSkipArticle = count - 1 !== 0 ? 20 * (count - 1) : 0;
-    setArtcileSkip(calcSkipArticle);
+    setArtcileSkip(() => calcSkipArticle);
     navigate(`/${artcileSkip}`);
   };
   const resData = {
