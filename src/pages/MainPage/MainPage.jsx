@@ -9,6 +9,7 @@ export default function MainPage() {
   const navigate = useNavigate();
   const params = useParams();
   const patchSkip = +params.skipArticle ? +params.skipArticle : 0;
+  console.log('PATCHSKIP', patchSkip);
   const [artcileSkip, setArtcileSkip] = useState(patchSkip);
   const userToken = useSelector((state) => state.user.jwt);
   const clickPagination = (count) => {
