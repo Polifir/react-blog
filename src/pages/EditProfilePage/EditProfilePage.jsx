@@ -41,7 +41,7 @@ export default function EditProfilePage() {
       },
     },
     {
-      type: 'input',
+      type: 'password',
       name: 'New password',
       label: 'password',
       validate: {

@@ -73,6 +73,28 @@ export default function Form({ data, onSubmit, type }) {
                   className={classNames(inputText, [
                     errors[e.label] ? inputError : false,
                   ])}
+                  {...register(e.label, {
+                    ...e.validate,
+                  })}
+                  placeholder={e.name}
+                />
+                {errors[e.label] && (
+                  <span className={validateError}>
+                    {errors[e.label].message}
+                  </span>
+                )}
+              </label>
+            );
+          case 'password':
+            return (
+              <label key={i} className={labelInput}>
+                <span className={inputDescr}>{e.name}</span>
+                <input
+                  type='password'
+                  defaultValue={e.defaultValue}
+                  className={classNames(inputText, [
+                    errors[e.label] ? inputError : false,
+                  ])}
                   {...register(e.label, e.validate)}
                   placeholder={e.name}
                 />
@@ -196,6 +218,9 @@ export default function Form({ data, onSubmit, type }) {
             return (
               <div className={tags} key={i}>
                 <span className={inputDescr}>{e.name}</span>
+                {errors.tagList && (
+                  <p className={validateError}>{errors.title.message}</p>
+                )}
                 {tagsInput.length ? (
                   tagsInput.map((tag, i) => (
                     <React.Fragment key={i}>
@@ -225,11 +250,6 @@ export default function Form({ data, onSubmit, type }) {
                           </button>
                         )}
                       </div>
-                      {errors[e.label] && (
-                        <span className={validateError}>
-                          {errors[e.label].message}
-                        </span>
-                      )}
                     </React.Fragment>
                   ))
                 ) : (

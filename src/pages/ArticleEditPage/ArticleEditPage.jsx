@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Form from '../../components/Form/Form';
 import {
   useGetArticleQuery,
@@ -12,6 +12,7 @@ export default function ArticleEditPage() {
   const { slug } = useParams();
   const { data = {}, isLoading } = useGetArticleQuery(slug);
   const [editArticle] = usePutArticleEditMutation();
+  const navigate = useNavigate();
   const getData = () => {
     return [
       { type: 'title', name: 'Edit article' },
@@ -23,6 +24,10 @@ export default function ArticleEditPage() {
         validate: {
           required: 'Обязательное поле',
           minLength: { value: 3, message: 'Минимальная длина 3 символа' },
+          pattern: {
+            value: /[^\s+|\s+$]/g,
+            message: 'Не может содержать лишь одни пробелы',
+          },
         },
       },
       {
@@ -32,6 +37,10 @@ export default function ArticleEditPage() {
         defaultValue: data?.article.description,
         validate: {
           required: 'Обязательное поле',
+          pattern: {
+            value: /[^\s+|\s+$]/g,
+            message: 'Не может содержать лишь одни пробелы',
+          },
         },
       },
       {
@@ -41,6 +50,10 @@ export default function ArticleEditPage() {
         label: 'body',
         validate: {
           required: 'Обязательное поле',
+          pattern: {
+            value: /[^\s+|\s+$]/g,
+            message: 'Не может содержать лишь одни пробелы',
+          },
         },
       },
       {
@@ -59,12 +72,17 @@ export default function ArticleEditPage() {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     const res = {
-      data,
+      data: {
+        ...data,
+        tagList: data.tagList.filter((e) => !(e.trim() === '')),
+      },
       userToken,
       slug,
     };
     editArticle(res);
+    navigate('/');
   };
   return isLoading ? (
     <Spin />

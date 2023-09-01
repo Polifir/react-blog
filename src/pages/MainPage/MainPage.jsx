@@ -3,12 +3,18 @@ import ArticleList from '../../components/ArticleList/ArticleList';
 import { useGetArticlesListQuery } from '../../redux';
 import { ConfigProvider, Pagination, Spin } from 'antd';
 import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function MainPage() {
-  const [artcileSkip, setArtcileSkip] = useState(0);
+  const navigate = useNavigate();
+  const params = useParams();
+  const patchSkip = +params.skipArticle;
+  const [artcileSkip, setArtcileSkip] = useState(patchSkip);
   const userToken = useSelector((state) => state.user.jwt);
   const clickPagination = (count) => {
-    setArtcileSkip(count !== 1 ? 20 * count : 0);
+    const calcSkipArticle = count - 1 !== 0 ? 20 * (count - 1) : 0;
+    setArtcileSkip(calcSkipArticle);
+    navigate(`/${calcSkipArticle}`);
   };
   const resData = {
     userToken,
@@ -31,8 +37,10 @@ export default function MainPage() {
         <Pagination
           showSizeChanger={false}
           pageSize={20}
-          defaultCurrent={1}
-          total={data.articlesCount - 20}
+          defaultCurrent={
+            artcileSkip ? (artcileSkip === 0 ? 1 : (artcileSkip + 20) / 20) : 1
+          }
+          total={data.articlesCount}
           onChange={clickPagination}
         />
       </ConfigProvider>

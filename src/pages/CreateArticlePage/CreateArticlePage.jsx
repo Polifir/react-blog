@@ -11,6 +11,10 @@ const formData = [
     validate: {
       required: 'Обязательное поле',
       minLength: { value: 3, message: 'Минимальная длина 3 символа' },
+      pattern: {
+        value: /[^\s+|\s+$]/g,
+        message: 'Не может содержать лишь одни пробелы',
+      },
     },
   },
   {
@@ -19,6 +23,10 @@ const formData = [
     label: 'description',
     validate: {
       required: 'Обязательное поле',
+      pattern: {
+        value: /[^\s+|\s+$]/g,
+        message: 'Не может содержать лишь одни пробелы',
+      },
     },
   },
   {
@@ -27,6 +35,10 @@ const formData = [
     label: 'body',
     validate: {
       required: 'Обязательное поле',
+      pattern: {
+        value: /[^\s+|\s+$]/g,
+        message: 'Не может содержать лишь одни пробелы',
+      },
     },
   },
   {
@@ -34,9 +46,6 @@ const formData = [
     name: 'Tags',
     label: 'tagList',
     defaultValue: [''],
-    validate: {
-      required: 'Обязательное поле',
-    },
   },
 
   {
@@ -51,7 +60,10 @@ export default function CreateArticlePage() {
   const userToken = useSelector((state) => state.user.jwt);
   const onSubmit = (data) => {
     const res = {
-      article: data,
+      article: {
+        ...data,
+        tagList: data.tagList.filter((e) => !(e.trim() === '')),
+      },
       userToken,
     };
     addArticle(res);

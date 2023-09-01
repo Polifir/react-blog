@@ -19,7 +19,7 @@ const formData = [
     },
   },
   {
-    type: 'input',
+    type: 'password',
     name: 'Password',
     label: 'password',
     validate: {
