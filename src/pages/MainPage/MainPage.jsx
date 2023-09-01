@@ -18,7 +18,7 @@ export default function MainPage() {
   };
   const resData = {
     userToken,
-    artcileSkip,
+    patchSkip,
   };
   const { data, isLoading } = useGetArticlesListQuery(resData);
   return isLoading ? (
