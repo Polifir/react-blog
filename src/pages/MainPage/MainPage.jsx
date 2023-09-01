@@ -15,7 +15,7 @@ export default function MainPage() {
   const clickPagination = (count) => {
     const calcSkipArticle = count - 1 !== 0 ? 20 * (count - 1) : 0;
     setArtcileSkip(() => calcSkipArticle);
-    navigate(`/${calcSkipArticle}`);
+    navigate(`/page/${calcSkipArticle}`);
   };
   const resData = {
     userToken,
